@@ -8,6 +8,7 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import {WebAuthComponent} from "./web-auth/web-auth.component";
+import {FormsRoutingModule} from "./forms/forms-routing.module";
 
 @NgModule({
   imports: [

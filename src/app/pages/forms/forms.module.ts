@@ -31,7 +31,6 @@ import { FormsModule as ngFormsModule } from '@angular/forms';
     NbCheckboxModule,
     NbRadioModule,
     NbDatepickerModule,
-    FormsRoutingModule,
     NbSelectModule,
     NbIconModule,
     ngFormsModule,

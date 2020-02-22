@@ -1,3 +1,74 @@
-<p>
-  create-event works!
-</p>
+<div class="row">
+  <div class="col-lg-12">
+    <form [formGroup]="form" (submit) = 'onSubmit()'>
+    <nb-card>
+      <nb-card-header>Create Event</nb-card-header>
+      <nb-card-body>
+        <input formControlName="eventName" type="text" nbInput fullWidth placeholder="Event Name">
+        <textarea formControlName="description" rows="5" nbInput fullWidth shape="round"  placeholder="Description"></textarea>
+        <div class="full-name-inputs">
+          <input formControlName="teamSize" type="number" nbInput fullWidth placeholder="Team Size">
+          <input formControlName="registrationLimit" type="number" nbInput fullWidth placeholder="Registration Limit">
+        </div>
+        <div class="full-name-inputs">
+          <nb-select formControlName="club" selected="1">
+            <nb-option  value="1">Club</nb-option>
+            <nb-option value="2">Option</nb-option>
+          </nb-select>
+          <nb-select formControlName="category" selected="1">
+            <nb-option value="1">Category</nb-option>
+            <nb-option value="2">Option</nb-option>
+          </nb-select>
+        </div>
+        <hr>
+        <p>Poster Upload:</p>
+        <ngx-dropzone (change)="onSelect($event)" [multiple]="false" [accept]="'image/jpeg,image/png'">
+          <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let f of files"  [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
+        <hr>
+        <p>Contacts:</p>
+        <div class="full-name-inputs" *ngFor="let coords of coordsArray">
+          <input formControlName="coords{{coords}}Name" type="text" nbInput fullWidth placeholder="Coordinator Name">
+          <input formControlName="coords{{coords}}Contact" type="text" nbInput fullWidth placeholder="Contact">
+          <button  nbButton status="danger" (click) = 'onDelete(coords)'>delete
+          </button>
+        </div>
+        <div style="text-align: center">
+          <button nbButton status="primary" (click) = 'onClick()'>add coordinator
+          </button>
+        </div>
+        <hr>
+        <p>Schedule:</p>
+        <br>
+        <div class="full-name-inputs" *ngFor="let rounds of roundsArray">
+          <p>Round&nbsp;{{ rounds }}&nbsp;:</p>
+          <br>
+          <input formControlName="round{{rounds}}Date" type="number" nbInput fullWidth placeholder="Day">
+          <p>Start Time:</p>&nbsp;<input formControlName="round{{rounds}}Start" type="time" nbInput fullWidth placeholder="Start Time">
+          <p>End Time:</p>&nbsp;<input formControlName="round{{rounds}}End" type="time" nbInput fullWidth placeholder="End Time">
+<!--          <button  nbButton status="danger" (click) = 'onDelete(rounds)'>delete-->
+<!--          </button>-->
+        </div>
+        <div style="text-align: center">
+          <button nbButton status="primary" (click) = 'addRound()'>add round
+          </button>
+          &nbsp;
+          <button nbButton status="danger" (click) = 'deleteRound()'>delete round
+          </button>
+        </div>
+        <hr>
+        <div style="text-align: center">
+          <button type="submit" nbButton status="success">submit
+          </button>
+        </div>
+
+
+
+      </nb-card-body>
+    </nb-card>
+    </form>
+  </div>
+</div>
