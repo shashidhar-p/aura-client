@@ -244,4 +244,72 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  {
+    title: 'Web-Auth',
+    icon: 'lock-outline',
+    children: [
+      {
+        title: 'Login',
+        link: 'web-auth/login',
+      },
+      {
+        title: 'Register',
+        link: 'web-auth/register',
+      },
+      {
+        title: 'Reset Password',
+        link: 'web-auth/reset-password',
+      },
+      {
+        title: 'Verify Email',
+        link: 'web-auth/verify-email',
+      },
+    ],
+  },
+  {
+    title: 'Dashboard',
+    icon: 'home-outline',
+    children: [
+      {
+        title: 'Create Event',
+        link: 'web-dashboard/create-event'},
+      {
+        title: 'Edit Event',
+        link: 'web-dashboard/edit-event',
+      },
+      {
+        title: 'List Event',
+        link: 'web-dashboard/list-events',
+      },
+      {
+        title: 'Add Coordinator',
+        link: 'web-dashboard/add-coords',
+      },
+      {
+        title: 'Coordinator List',
+        link: 'web-dashboard/list-coords',
+      },
+      {
+        title: 'Send Notifications',
+        link: 'web-dashboard/send-notifications',
+      },
+      {
+        title: 'View Notifications',
+        link: 'web-dashboard/view-notifications',
+      },
+      {
+        title: 'View Participants',
+        link: 'web-dashboard/view-participants',
+      },
+      {
+        title: 'Edit Participants',
+        link: 'web-dashboard/edit-participants',
+      },
+      {
+        title: 'Profile',
+        link: 'web-dashboard/user',
+      },
+    ],
+  },
+
 ];

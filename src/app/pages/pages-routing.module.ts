@@ -69,6 +69,16 @@ const routes: Routes = [{
         .then(m => m.MiscellaneousModule),
     },
     {
+      path: 'web-auth',
+      loadChildren: () => import('./web-auth/web-auth.module')
+        .then(m => m.WebAuthModule),
+    },
+    {
+      path: 'web-dashboard',
+      loadChildren: () => import('./web-dashboard/web-dashboard.module')
+        .then(m => m.WebDashboardModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',
