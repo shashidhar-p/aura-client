@@ -309,6 +309,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Profile',
         link: 'web-dashboard/user',
       },
+      {
+        title: 'Create Notification',
+        link: 'web-dashboard/create-notification',
+      },
+      {
+        title: 'List Notification',
+        link: 'web-dashboard/list-notification',
+      },
     ],
   },
 

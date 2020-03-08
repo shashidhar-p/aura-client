@@ -11,6 +11,8 @@ import {ViewNotificationsComponent} from "./view-notifications/view-notification
 import {ViewParticipantsComponent} from "./view-participants/view-participants.component";
 import {EditParticipantsComponent} from "./edit-participants/edit-participants.component";
 import {UserComponent} from "./user/user.component";
+import {CreateNotificationComponent} from "./create-notification/create-notification.component";
+import {ListNotificationComponent} from "./list-notification/list-notification.component";
 
 const routes: Routes = [{
   path: '',
@@ -55,6 +57,14 @@ const routes: Routes = [{
     {
       path: 'user',
       component: UserComponent,
+    },
+    {
+      path: 'create-notification',
+      component: CreateNotificationComponent,
+    },
+    {
+      path: 'list-notification',
+      component: ListNotificationComponent,
     },
 
   ],

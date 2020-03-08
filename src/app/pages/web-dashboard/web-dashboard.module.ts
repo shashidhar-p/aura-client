@@ -23,16 +23,21 @@ import {
   NbIconModule,
   NbInputModule,
   NbRadioModule,
-  NbSelectModule,
+  NbSelectModule, NbTreeGridModule,
   NbUserModule
 } from "@nebular/theme";
 import {FormsModule as ngFormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxDropzoneModule} from "ngx-dropzone";
+import {Ng2SmartTableModule} from "ng2-smart-table";
+import { CreateNotificationComponent } from './create-notification/create-notification.component';
+import { ListNotificationComponent } from './list-notification/list-notification.component';
 
 @NgModule({
   declarations: [WebDashboardComponent,
     CreateEventComponent, EditEventComponent, ListEventsComponent, AddCoordsComponent, ListCoordsComponent,
-    SendNotificationsComponent, ViewNotificationsComponent, ViewParticipantsComponent, EditParticipantsComponent, UserComponent],
+    SendNotificationsComponent, ViewNotificationsComponent, ViewParticipantsComponent, EditParticipantsComponent, UserComponent,
+    CreateNotificationComponent,
+    ListNotificationComponent,],
   imports: [
     CommonModule,
     WebDashboardRoutingModule,
@@ -49,8 +54,14 @@ import {NgxDropzoneModule} from "ngx-dropzone";
     NbIconModule,
     ngFormsModule,
     NgxDropzoneModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    NbCardModule,
+    NbTreeGridModule,
+    NbIconModule,
+    NbInputModule,
+    ThemeModule,
+    Ng2SmartTableModule,
+  ],
 
 })
 export class WebDashboardModule {

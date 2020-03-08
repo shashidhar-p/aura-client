@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 
 
 @Component({
-  selector: 'web-auth',
+  selector: 'web-pages',
   template: `
     <router-outlet></router-outlet>
   `,

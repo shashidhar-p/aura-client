@@ -80,7 +80,7 @@ del=0
     this.roundsArray.push(this.roundsCount);
     this.roundsCount+=1;
   }
-x ={}; 
+x ={};
   deleteRound(){
     if(this.roundsArray.length===1)
     {
@@ -128,7 +128,7 @@ y={};
     if(this.k[0] == 'round'){
       if(this.k[1] == 'Date'){
         this.y['Date'] =this.form.get(key).value;
-      } 
+      }
       if(this.k[1] == 'Start'){
         this.y['Start'] =this.form.get(key).value;
       }
@@ -155,7 +155,7 @@ y={};
     // for(var j=0; j<this.roundFinal.length;j++) {
     //   console.log(this.roundFinal[j]['End']);
     // }
-    
+
     //name = this.form.value.eventName
     //description = this.form.value.description
     //teamSize = this.form.value.teamSize
@@ -174,10 +174,13 @@ y={};
       coords: this.coordsFinal,
       rounds: this.roundFinal
     }
+    console.log(body);
     this.http.post('http://localhost:3000',body)
     .subscribe(data=>{
       this.router.navigate(['/','pages','web-dashboard','list-events'])
       console.log(data);
+
+
     })
   }
 }

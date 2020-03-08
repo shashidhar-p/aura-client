@@ -20,7 +20,6 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import {NgxDropzoneModule} from "ngx-dropzone";
 
 @NgModule({
   declarations: [AppComponent],

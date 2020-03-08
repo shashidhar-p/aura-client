@@ -1,3 +1,32 @@
-<p>
-  add-coords works!
-</p>
+<div class="row">
+  <div class="col-lg-12">
+    <form [formGroup]="form" (submit) = 'onSubmit()'>
+      <nb-card>
+        <nb-card-header>Add Coordinator</nb-card-header>
+        <nb-card-body>
+          <input formControlName="coordinatorName" type="text" nbInput fullWidth placeholder="Name">
+          <div class="full-name-inputs">
+            <input formControlName="coordinatorEmail" type="text" nbInput fullWidth placeholder="Email">
+            <input formControlName="coordinatorContact" type="text" nbInput fullWidth placeholder="Contact">
+          </div>
+          <div class="full-name-inputs">
+            <input formControlName="coordinatorUsn" type="text" nbInput fullWidth placeholder="USN">
+            <input formControlName="coordinatorUid" type="text" nbInput fullWidth placeholder="UID">
+          </div>
+          <div class="full-name-inputs">
+            <input formControlName="coordinatorPassword" type="text" nbInput placeholder="Password">
+            <nb-select formControlName="coordinatorRole" >
+
+              <nb-option *ngFor="let r of roles" value="{{r}}">{{r}}</nb-option>
+            </nb-select>
+          </div>
+          <hr>
+          <div style="text-align: center">
+            <button type="submit" nbButton status="success">submit
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </div>
+</div>

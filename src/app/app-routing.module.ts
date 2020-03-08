@@ -16,6 +16,11 @@ const routes: Routes = [
       .then(m => m.PagesModule),
   },
   {
+    path: 'web-pages',
+    loadChildren: () => import('app/pages/web-pages/web-pages.module')
+      .then(m => m.WebPagesModule),
+  },
+  {
     path: 'auth',
     component: NbAuthComponent,
     children: [
@@ -45,7 +50,7 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  { path: '', redirectTo: 'web', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
 ];
 
