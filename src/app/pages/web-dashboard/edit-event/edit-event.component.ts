@@ -18,9 +18,17 @@ export class EditEventComponent implements OnInit {
   arr:Array<{name:string,contact:number}>= [];
   files: File[] = [];
   form: FormGroup;
+  form2: FormGroup;
   roundsCount:number=1;
   roundsArray:Array<number>=[];
-
+  id:any;
+  poster:any;
+  currentClub:any;
+  currentCategory:any;
+  // apiURL ='http://192.168.0.153:3000/events/'
+  apiURL ='https://aura.git.edu/api/events/'
+  clubs= ['dance','dramatics','fashion','finearts','literary','music','quiz','photography','specials'];
+  category = ['platinum','gold','silver']
 
   constructor(public  fb: FormBuilder,private http:HttpClient, private router: Router) {
 
@@ -32,18 +40,23 @@ export class EditEventComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form2 = new FormGroup({
+      id: new FormControl(null, {validators: [Validators.required]}),
+    })
     this.form = new FormGroup({
-      eventName: new FormControl(null, {validators: [Validators.required]}),
-      description: new FormControl(null, {validators: [Validators.required]}),
-      teamSize: new FormControl(null, {validators: [Validators.required]}),
-      registrationLimit: new FormControl(null, {validators: [Validators.required]}),
-      club: new FormControl(null, {validators: [Validators.required]}),
-      category: new FormControl(null, {validators: [Validators.required]}),
-      coords1Name: new FormControl(null, {validators: [Validators.required]}),
-      coords1Contact: new FormControl(null, {validators: [Validators.required]}),
-      round1Date: new FormControl(null, {validators: [Validators.required]}),
-      round1Start: new FormControl(null, {validators: [Validators.required]}),
-      round1End: new FormControl(null, {validators: [Validators.required]}),
+      eventName : new FormControl(null, {validators: [Validators.required]}),
+      description : new FormControl(null, {validators: [Validators.required]}),
+      oneliner: new FormControl(null, {validators: [Validators.required]}),
+      minTeamSize: new FormControl(null, {validators: [Validators.required]}),
+      maxTeamSize: new FormControl(null, {validators: [Validators.required]}),
+      registrationLimit : new FormControl(null, {validators: [Validators.required]}),
+      club : new FormControl(null, {validators: [Validators.required]}),
+      category : new FormControl(null, {validators: [Validators.required]}),
+      coords1Name : new FormControl(null, {validators: [Validators.required]}),
+      coords1Contact : new FormControl(null, {validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}),
+      round1Date : new FormControl(null, {validators: [Validators.required]}),
+      round1Start : new FormControl(null, {validators: [Validators.required]}),
+      round1End : new FormControl(null, {validators: [Validators.required]}),
     });
     //   this.form.value.eventName = data.name,
     //   this.form.value.description=data.description,
@@ -56,14 +69,16 @@ export class EditEventComponent implements OnInit {
     // console.log(data);
     console.log("on init:"+this.coordsCount);
     // this.getData();
-  this.getData().then(data => {
-    if (data != {}) {
-      this.setData(data).then(result => console.log("SetData " + result));
-    }
-  })
+  
     // console.log("After get data:"+this.coordsCount);
   }
-
+  getDetails() {
+    this.getData().then(data => {
+      if (data != {}) {
+        this.setData(data).then(result => console.log("SetData " + result));
+      }
+    })
+  }
   onClick() {
 
     this.form.addControl('coords'+this.coordsCount+'Name',this.fb.control(null, {validators: [Validators.required]}));
@@ -120,7 +135,7 @@ export class EditEventComponent implements OnInit {
   onSelect(event) {
     // console.log(event);
     this.files.push(...event.addedFiles);
-
+    this.poster = event.addedFiles[0]
   }
 
   onRemove(event) {
@@ -186,27 +201,26 @@ export class EditEventComponent implements OnInit {
     var body = {
       name: this.form.value.eventName,
       description: this.form.value.description,
-      teamSize: this.form.value.teamSize,
+      oneLiner : this.form.value.oneLiner,
+      minTeamSize: this.form.value.minTeamSize,
+      maxTeamSize: this.form.value.maxTeamSize,      
       registrationLimit: this.form.value.registrationLimit,
-      file: this.files[0],
       club: this.form.value.club,
       category: this.form.value.category,
-      coords: this.coordsFinal,
-      rounds: this.roundFinal
+      coords: JSON.stringify(this.coordsFinal) ,
+      rounds: JSON.stringify(this.roundFinal) 
     }
-    this.http.post('http://localhost:3000',body)
+    this.http.put(this.apiURL+this.form2.value.id,body)
       .subscribe(data=>{
         this.router.navigate(['/','pages','web-dashboard','list-events'])
         console.log("post data:"+data);
-
-
       })
     // this.form.reset();
-
   }
 
   async getData() {
-    const data = await this.http.get('http://localhost:3000').toPromise();
+
+    const data = await this.http.get(this.apiURL+this.form2.value.id).toPromise();
     console.log("Tanuj Ravi Rao is Legend " );
     // .subscribe((data) =>{
     //   this.data = data;
@@ -215,32 +229,48 @@ export class EditEventComponent implements OnInit {
   async setData(data) {
     this.form.get('eventName').setValue(data.name);
     this.form.get('description').setValue(data.description);
-    this.form.get('teamSize').setValue(data.teamSize);
+    this.form.get('oneliner').setValue(data.oneliner);
+    this.form.get('minTeamSize').setValue(data.minTeamSize);
+    this.form.get('maxTeamSize').setValue(data.maxTeamSize);
     this.form.get('registrationLimit').setValue(data.registrationLimit);
     this.form.get('club').setValue(data.club);
+    this.currentClub = data.club
     this.form.get('category').setValue(data.category);
-    console.log(data.coords.length);
-    for (var i = 1; i <= data.coords.length - 1; i++) {
+    this.currentCategory = data.category
+    var coords = JSON.parse(data.coords)
+    console.log(coords.length);
+    for (var i = 1; i <= coords.length - 1; i++) {
       this.onClick();
     }
 
     for (var i = 1; i < this.coordsCount; i++) {
-      this.form.get('coords' + i + 'Name').setValue(data.coords[i - 1].Name);
-      this.form.get('coords' + i + 'Contact').setValue(data.coords[i - 1].Contact);
+      this.form.get('coords' + i + 'Name').setValue(coords[i - 1].Name);
+      this.form.get('coords' + i + 'Contact').setValue(coords[i - 1].Contact);
     }
-
-    for (var i = 1; i <= data.rounds.length - 1; i++) {
+    var rounds = JSON.parse(data.rounds)
+    for (var i = 1; i <= rounds.length - 1; i++) {
       this.addRound();
     }
 
 
     for (var i = 1; i < this.roundsCount; i++) {
-      this.form.get('round' + i + 'Date').setValue(data.rounds[i - 1].Date);
-      this.form.get('round' + i + 'Start').setValue(data.rounds[i - 1].Start);
-      this.form.get('round' + i + 'End').setValue(data.rounds[i - 1].End);
+      this.form.get('round' + i + 'Date').setValue(rounds[i - 1].Date);
+      this.form.get('round' + i + 'Start').setValue(rounds[i - 1].Start);
+      this.form.get('round' + i + 'End').setValue(rounds[i - 1].End);
     }
+    this.id = data.id
     return {result: "Success"};
   }
-
+  changePoster() {
+    console.log(this.id)
+    if(this.id) {
+      const dataForm = new FormData()
+      dataForm.append('poster', this.poster )
+      this.http.post(this.apiURL + '/updatePoster/'+this.id,dataForm)
+      .subscribe((data) => {
+        console.log(data)
+      })  
+    }
+  }
 
 }

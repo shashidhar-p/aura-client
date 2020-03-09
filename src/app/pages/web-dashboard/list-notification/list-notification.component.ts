@@ -9,7 +9,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./list-notification.component.scss']
 })
 export class ListNotificationComponent implements OnInit {
-apiURL = 'http://192.168.0.168:3000/notifs/';
+apiURL = 'https://aura.git.edu/api/notifs/';
 data: any;
   settings = {
     hideSubHeader: true,
@@ -30,7 +30,7 @@ data: any;
         editable:false,
       },
       title: {
-        title: 'Notification Name',
+        title: 'Title',
         type: 'string',
       },
       createdby: {

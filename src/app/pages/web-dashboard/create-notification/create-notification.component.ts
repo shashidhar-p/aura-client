@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./create-notification.component.scss']
 })
 export class CreateNotificationComponent implements OnInit {
+  apiURL = 'https://aura.git.edu/api/notifs/'
   form: FormGroup;
   constructor(private http:HttpClient,private router:Router){ }
 
@@ -33,7 +34,7 @@ export class CreateNotificationComponent implements OnInit {
         audience: this.form.value.audience,
         type: this.form.value.type,
       }
-      this.http.post('http://192.168.0.168:3000/notifs/',body)
+      this.http.post(this.apiURL,body)
         .subscribe(data=>{
           console.log(data)
           this.router.navigate(['/','pages','web-dashboard','list-notification']);

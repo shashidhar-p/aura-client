@@ -4,23 +4,34 @@
       <nb-card>
         <nb-card-header>Add Coordinator</nb-card-header>
         <nb-card-body>
-          <input formControlName="coordinatorName" type="text" nbInput fullWidth placeholder="Name">
+          <input formControlName="coordName" type="text" nbInput fullWidth placeholder="Name">
           <div class="full-name-inputs">
-            <input formControlName="coordinatorEmail" type="text" nbInput fullWidth placeholder="Email">
-            <input formControlName="coordinatorContact" type="text" nbInput fullWidth placeholder="Contact">
+            <input formControlName="coordEmail" type="text" nbInput fullWidth placeholder="Email">
+            <input formControlName="coordContact" type="text" nbInput fullWidth placeholder="Contact">
           </div>
           <div class="full-name-inputs">
-            <input formControlName="coordinatorUsn" type="text" nbInput fullWidth placeholder="USN">
-            <input formControlName="coordinatorUid" type="text" nbInput fullWidth placeholder="UID">
+            <input formControlName="coordUsn" type="text" nbInput fullWidth placeholder="USN">
+            <input formControlName="coordUid" type="text" nbInput fullWidth placeholder="UID">
           </div>
           <div class="full-name-inputs">
-            <input formControlName="coordinatorPassword" type="text" nbInput placeholder="Password">
-            <nb-select formControlName="coordinatorRole" >
-
-              <nb-option *ngFor="let r of roles" value="{{r}}">{{r}}</nb-option>
+            <input formControlName="coordPassword" type="password" nbInput placeholder="Password">
+            <nb-select formControlName="coordRole" placeholder="Type">
+              <nb-option value="main">Main</nb-option>
+              <nb-option value="event">Event</nb-option>
             </nb-select>
           </div>
+          <p>Image Upload:</p>
+          <ngx-dropzone (change)="onSelect($event)" [multiple]="false" [accept]="'image/jpeg,image/png'">
+            <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+            <ngx-dropzone-preview *ngFor="let f of files"  [removable]="true" (removed)="onRemove(f)">
+              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+            </ngx-dropzone-preview>
+          </ngx-dropzone>  
           <hr>
+          <div *ngIf="form.invalid && this.submit==true"
+          class="alert alert-danger">
+          Invalid Form Content
+          </div>
           <div style="text-align: center">
             <button type="submit" nbButton status="success">submit
             </button>

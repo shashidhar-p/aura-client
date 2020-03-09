@@ -6,18 +6,18 @@
       <nb-card-body>
         <input formControlName="eventName" type="text" nbInput fullWidth placeholder="Event Name">
         <textarea formControlName="description" rows="5" nbInput fullWidth shape="round"  placeholder="Description"></textarea>
+        <textarea formControlName="oneliner" rows="5" nbInput fullWidth shape="round"  placeholder="One Liner"></textarea>
         <div class="full-name-inputs">
-          <input formControlName="teamSize" type="number" nbInput fullWidth placeholder="Team Size">
-          <input formControlName="registrationLimit" type="number" nbInput fullWidth placeholder="Registration Limit">
+          <input formControlName="minTeamSize" type="number" nbInput fullWidth placeholder="Max Team Size">
+          <input formControlName="maxTeamSize" type="number" nbInput fullWidth placeholder="Min Team Size">
+          <input formControlName="registrationLimit" type="number" nbInput fullWidth placeholder="Reg Limit">
         </div>
         <div class="full-name-inputs">
-          <nb-select formControlName="club" selected="Club">
-            <nb-option  value="Club">Club</nb-option>
-            <nb-option value="Option">Option</nb-option>
+          <nb-select formControlName="club" placeholder="Cultural Club">
+            <nb-option *ngFor='let c of clubs'  value="{{c}}">{{c}}</nb-option>
           </nb-select>
-          <nb-select formControlName="category" selected="Category">
-            <nb-option value="Category">Category</nb-option>
-            <nb-option value="Option">Option</nb-option>
+          <nb-select formControlName="category" placeholder="Category">
+            <nb-option *ngFor='let c of category'  value="{{c}}">{{c}}</nb-option>
           </nb-select>
         </div>
         <hr>

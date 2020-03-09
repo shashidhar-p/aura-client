@@ -10,15 +10,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-event.component.scss']
 })
 export class CreateEventComponent implements OnInit {
+  // apiURL = 'http://192.168.0.153:3000/events/'
+  apiURL = 'https://aura.git.edu/api/events/'
   coordsCount:number =1;
   coordsArray:Array<number>= [];
   coordsFinal:Array<{}> = [];
   roundFinal:Array<{}> = [];
   arr:Array<{name:string,contact:number}>= [];
   files: File[] = [];
+  poster: File;
   form: FormGroup;
    roundsCount:number=1;
    roundsArray:Array<number>=[];
+   clubs= ['dance','dramatics','fashion','finearts','literary','music','quiz','photography','specials'];
+   category = ['platinum','gold','silver']
 
   constructor(public  fb: FormBuilder,private http:HttpClient, private router: Router) {
     this.coordsArray.push(this.coordsCount);
@@ -32,12 +37,14 @@ export class CreateEventComponent implements OnInit {
   this.form =new FormGroup({
     eventName : new FormControl(null, {validators: [Validators.required]}),
     description : new FormControl(null, {validators: [Validators.required]}),
-    teamSize: new FormControl(null, {validators: [Validators.required]}),
+    oneliner: new FormControl(null, {validators: [Validators.required]}),
+    minTeamSize: new FormControl(null, {validators: [Validators.required]}),
+    maxTeamSize: new FormControl(null, {validators: [Validators.required]}),
     registrationLimit : new FormControl(null, {validators: [Validators.required]}),
     club : new FormControl(null, {validators: [Validators.required]}),
     category : new FormControl(null, {validators: [Validators.required]}),
     coords1Name : new FormControl(null, {validators: [Validators.required]}),
-    coords1Contact : new FormControl(null, {validators: [Validators.required]}),
+    coords1Contact : new FormControl(null, {validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}),
     round1Date : new FormControl(null, {validators: [Validators.required]}),
     round1Start : new FormControl(null, {validators: [Validators.required]}),
     round1End : new FormControl(null, {validators: [Validators.required]}),
@@ -48,7 +55,7 @@ export class CreateEventComponent implements OnInit {
 
 
     this.form.addControl('coords'+this.coordsCount+'Name',this.fb.control(null, {validators: [Validators.required]}));
-    this.form.addControl('coords'+this.coordsCount+'Contact',this.fb.control(null, {validators: [Validators.required]}));
+    this.form.addControl('coords'+this.coordsCount+'Contact',this.fb.control(null, {validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}));
     this.coordsArray.push(this.coordsCount);
     this.coordsCount +=1;
     console.log(this.form.value);
@@ -99,6 +106,7 @@ x ={};
   }
   onSelect(event) {
     console.log(event);
+    this.poster = event.addedFiles[0];
     this.files.push(...event.addedFiles);
 
   }
@@ -111,6 +119,7 @@ k=[]
 y={};
   onSubmit() {
     if(this.form.invalid){
+      console.log('nai Hota')
       return;
     }
     Object.keys(this.form.controls).forEach(key => {
@@ -163,24 +172,24 @@ y={};
     //file = this.files[0]
     //category = this.form.value.category
     //club = this.form.value.club
-    var body = {
-      name: this.form.value.eventName,
-      description: this.form.value.description,
-      teamSize: this.form.value.teamSize,
-      registrationLimit: this.form.value.registrationLimit,
-      file: this.files[0],
-      club: this.form.value.club,
-      category: this.form.value.category,
-      coords: this.coordsFinal,
-      rounds: this.roundFinal
-    }
+    const body = new FormData();
+    body.set('name', this.form.value.eventName)
+    body.set('description', this.form.value.description      )
+    body.set('oneliner', this.form.value.oneliner)
+    body.set('maxTeamSize', this.form.value.maxTeamSize)
+    body.set('minTeamSize', this.form.value.minTeamSize)
+    body.set('club', this.form.value.club)
+    body.set('category', this.form.value.category)
+    body.set('registrationLimit', this.form.value.registrationLimit)
+    body.set('coords', JSON.stringify(this.coordsFinal))
+    body.set('rounds', JSON.stringify(this.roundFinal))
+
+    body.append('poster', this.poster)
     console.log(body);
-    this.http.post('http://localhost:3000',body)
+    this.http.post(this.apiURL,body)
     .subscribe(data=>{
       this.router.navigate(['/','pages','web-dashboard','list-events'])
       console.log(data);
-
-
     })
   }
 }

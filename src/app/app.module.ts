@@ -11,6 +11,7 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ErrorMessageModule } from 'ng-error-messages';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -28,6 +29,7 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    ErrorMessageModule,
     ThemeModule.forRoot(),
 
     NbSidebarModule.forRoot(),
